@@ -42,7 +42,7 @@ RUN pip3 install --no-cache-dir "chemprop==2.2.3" "lightning==2.6.5"
 # Install DGL + DGL-Life for GIN supervised masking embeddings (300 dims)
 # Required by CatBoost SOTA models trained with 2873-dim features (2573 base + 300 GIN)
 # Must match the benchmark: dgllife.model.load_pretrained('gin_supervised_masking')
-RUN pip3 install --no-cache-dir dgl==2.2.0 dgllife>=0.3.2
+RUN pip3 install --no-cache-dir dgl==2.1.0 dgllife>=0.3.2
 
 # Create working directory
 WORKDIR /app

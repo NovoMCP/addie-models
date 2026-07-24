@@ -16,13 +16,14 @@ onnxruntime==1.18.1
 # CatBoost heads use Morgan/Avalon/ErG/RDKit features + a 300-dim DGL-Life GIN
 # embedding; the DILI head is a Chemprop v2 ensemble.
 #
-# Version pins matter here: dgl 2.2.0's graphbolt only ships C++ libs for
+# Version pins matter here: dgl 2.1's graphbolt only ships C++ libs for
 # torch 2.1–2.3 and imports torchdata.datapipes (removed in torchdata >= 0.8),
-# so a newer torch/torchdata makes `import dgl` fail. This is the tested combo.
+# so a newer torch/torchdata makes `import dgl` fail. This is the tested combo
+# (dgl 2.1.0 is the newest on PyPI; 2.2.x only ships from dgl's own index).
 catboost>=1.2.0
 torch==2.1.2
 torchdata==0.7.1
-dgl==2.2.0
+dgl==2.1.0
 dgllife>=0.3.2
 chemprop==2.2.3
 lightning==2.6.5
