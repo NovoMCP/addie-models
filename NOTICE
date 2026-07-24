@@ -1,0 +1,55 @@
+NovoMCP addie-models
+Copyright 2026 Quant NexusAI Inc. (NovoMCP)
+
+Model weights in this repository are licensed under the MIT License.
+
+These models were trained on the datasets listed below. Attribution to these
+sources is required when redistributing the weights. Where a source dataset
+carries a Creative Commons license, that is noted; the trained weights are
+released under MIT with attribution.
+
+--------------------------------------------------------------------------------
+Training data sources
+--------------------------------------------------------------------------------
+
+Tox21 (nuclear-receptor and stress-response endpoints)
+  U.S. Tox21 program (NIH/NCATS, EPA, FDA, NTP). Public domain.
+  https://tripod.nih.gov/tox21/
+
+PubChem BioAssay — CYP450 inhibition
+  Veith, H. et al. "Comprehensive characterization of cytochrome P450 isozyme
+  selectivity across chemical libraries." Nat. Biotechnol. 27, 1050-1055 (2009).
+  U.S. Government work; public domain.
+
+FDA DICTrank — cardiotoxicity
+  Liu, Z. et al. "DICTrank: FDA-curated drug-induced cardiotoxicity rank."
+  Drug Discov. Today (2023). FDA public resource.
+
+DILIrank — drug-induced liver injury
+  Xu, J.J. et al. / FDA DILIrank dataset (2015). Public.
+
+ChEMBL / AstraZeneca ADME datasets — plasma protein binding (ppbr_az),
+hepatocyte and microsome clearance (clearance_hepatocyte_az,
+clearance_microsome_az), lipophilicity (lipophilicity_astrazeneca)
+  Released by AstraZeneca via ChEMBL. Source data licensed CC-BY-SA 3.0.
+  ChEMBL: https://www.ebi.ac.uk/chembl/  (EMBL-EBI)
+
+AqSolDB — aqueous solubility (solubility_aqsoldb)
+  Sorkun, M.C., Khetan, A., Er, S. "AqSolDB, a curated reference set of aqueous
+  solubility." Sci. Data 6, 143 (2019). Source data licensed CC-BY 4.0.
+
+Academic measurement datasets (via Therapeutics Data Commons)
+  Caco-2 permeability — Wang, N.-N. et al. (2016)
+  Human intestinal absorption — Hou, T. et al. (2007)
+  Oral bioavailability — Ma, C.-Y. et al. (2008)
+  Blood-brain barrier — Martins, I.F. et al. (2012)
+  Volume of distribution — Lombardo, F., Jing, Y. (2016)
+  Half-life — Obach, R.S. et al. (2008)
+  Acute toxicity LD50 — Zhu, H. et al. (2009)
+  CYP substrate — Carbon-Mangels, M., Hutter, M.C. (2011)
+  P-glycoprotein substrate — Broccatelli, F. et al. / Wang, Z. et al.
+
+Therapeutics Data Commons (benchmark splits)
+  Huang, K. et al. "Therapeutics Data Commons: Machine Learning Datasets and
+  Tasks for Drug Discovery and Development." NeurIPS (2021).
+  https://tdcommons.ai/
