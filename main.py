@@ -54,7 +54,10 @@ TDC_SOTA_KEY_PREFIX = os.environ.get(
     'TDC_SOTA_KEY_PREFIX',
     '' if os.environ.get('STORAGE_BACKEND', 'HF').upper() == 'HF' else 'addie-models/'
 )
-TDC_USE_GIN = os.environ.get('TDC_USE_GIN', 'false').lower() == 'true'
+# Default ON: several TDC winners (Tox21 nr/sr, CYP/clearance) were trained with
+# the 300-dim GIN embedding (2874-dim features). With GIN off they load but throw
+# a feature-count mismatch at predict time and return null for those heads.
+TDC_USE_GIN = os.environ.get('TDC_USE_GIN', 'true').lower() == 'true'
 
 # Azure Blob Storage support
 try:

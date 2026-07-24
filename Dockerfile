@@ -28,7 +28,9 @@ RUN pip3 install --no-cache-dir \
     catboost>=1.2.0
 
 # Install PyTorch CPU version separately
-RUN pip3 install --no-cache-dir torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu
+# torch 2.1.x + torchdata 0.7.1: required by dgl 2.2.0's graphbolt (see below).
+RUN pip3 install --no-cache-dir torch==2.1.2 --index-url https://download.pytorch.org/whl/cpu
+RUN pip3 install --no-cache-dir torchdata==0.7.1
 
 # Install Chemprop v2 + Lightning for SOTA endpoints (dili, ld50, lipophilicity, pgp_substrate)
 # PINNED intentionally. The DILI double-sigmoid handling depends on chemprop v2's
@@ -40,7 +42,7 @@ RUN pip3 install --no-cache-dir "chemprop==2.2.3" "lightning==2.6.5"
 # Install DGL + DGL-Life for GIN supervised masking embeddings (300 dims)
 # Required by CatBoost SOTA models trained with 2873-dim features (2573 base + 300 GIN)
 # Must match the benchmark: dgllife.model.load_pretrained('gin_supervised_masking')
-RUN pip3 install --no-cache-dir dgl>=2.0 dgllife>=0.3.2
+RUN pip3 install --no-cache-dir dgl==2.2.0 dgllife>=0.3.2
 
 # Create working directory
 WORKDIR /app

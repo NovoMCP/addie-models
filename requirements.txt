@@ -15,12 +15,16 @@ onnxruntime==1.18.1
 # ML runtime for the prediction heads.
 # CatBoost heads use Morgan/Avalon/ErG/RDKit features + a 300-dim DGL-Life GIN
 # embedding; the DILI head is a Chemprop v2 ensemble.
+#
+# Version pins matter here: dgl 2.2.0's graphbolt only ships C++ libs for
+# torch 2.1–2.3 and imports torchdata.datapipes (removed in torchdata >= 0.8),
+# so a newer torch/torchdata makes `import dgl` fail. This is the tested combo.
 catboost>=1.2.0
-dgl>=2.0
+torch==2.1.2
+torchdata==0.7.1
+dgl==2.2.0
 dgllife>=0.3.2
 chemprop==2.2.3
 lightning==2.6.5
-# PyTorch: this pulls the default wheel for your platform. For a CPU-only box,
-# install the CPU build instead:
-#   pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu
-torch==2.5.1
+# For a CPU-only box, install torch from the CPU index first:
+#   pip install torch==2.1.2 --index-url https://download.pytorch.org/whl/cpu
