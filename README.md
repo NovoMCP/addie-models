@@ -6,14 +6,21 @@ Weights are published separately on Hugging Face: **[NovoMCP/addie-models](https
 
 ## Quickstart
 
-The service pulls its weights from Hugging Face on first boot — no cloud credentials needed.
+Build and run from source — the recommended path; no dependency on a prebuilt image. Weights download from Hugging Face on first boot (no cloud credentials):
 
 ```bash
-docker run -p 8025:8025 ghcr.io/novomcp/addie-models:latest
+docker build -t addie-models .
+docker run -p 8025:8025 addie-models
 # first boot downloads the weights (~510 MiB), then serves on :8025
 ```
 
-Or run from source:
+Or pull the prebuilt image:
+
+```bash
+docker run -p 8025:8025 ghcr.io/novomcp/addie-models:latest
+```
+
+Or run without Docker:
 
 ```bash
 pip install -r requirements.txt   # Python 3.11 recommended
