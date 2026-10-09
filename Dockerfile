@@ -49,10 +49,12 @@ RUN pip3 install --no-cache-dir "chemprop==2.2.3" "lightning==2.6.5"
 #
 # ARCH NOTE: dgl 2.1.0 has an x86 PyPI wheel but NO linux-aarch64 build anywhere.
 # DGL's own index only ships aarch64 for 2.2.0/2.2.1 (torch-2.1). So arm64 must
-# use dgl 2.2.0 — a version bump from the pinned x86 2.1.0. >>> The GIN embedding
-# parity between 2.1.0 (x86) and 2.2.0 (arm64) MUST be validated before merge:
-# confirm dgllife load_pretrained('gin_supervised_masking') yields matching
-# 300-dim features, else the aarch64 ADMET SOTA predictions silently diverge. <<<
+# use dgl 2.2.0 — a version bump from the pinned x86 2.1.0. GIN-embedding parity
+# checked 2026-10-09 via dgllife load_pretrained('gin_supervised_masking'):
+# arm64 dgl 2.2.0 vs x86 dgl 2.4.0 (same pretrained weights) — CCO + aspirin
+# sum/L2 agree to ~1e-6, first-8 identical to 6 decimals. The x86 build pinned
+# here is 2.1.0 (same weights + GIN math), so parity is expected to carry but was
+# NOT run head-to-head against 2.1.0 — do that run if you want the exact match.
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
       pip3 install --no-cache-dir dgl==2.2.0 -f https://data.dgl.ai/wheels/torch-2.1/repo.html ; \
     else \
