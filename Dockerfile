@@ -1,6 +1,10 @@
 # addie-models — ADMET prediction service
 FROM python:3.11-slim
 
+# buildx sets TARGETARCH. CPU service — builds multi-arch in CI. Most deps are
+# pure-Python / have aarch64 wheels; the one arch-conditional is DGL (see below).
+ARG TARGETARCH
+
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
@@ -42,7 +46,21 @@ RUN pip3 install --no-cache-dir "chemprop==2.2.3" "lightning==2.6.5"
 # Install DGL + DGL-Life for GIN supervised masking embeddings (300 dims)
 # Required by CatBoost SOTA models trained with 2873-dim features (2573 base + 300 GIN)
 # Must match the benchmark: dgllife.model.load_pretrained('gin_supervised_masking')
-RUN pip3 install --no-cache-dir dgl==2.1.0 dgllife>=0.3.2
+#
+# ARCH NOTE: dgl 2.1.0 has an x86 PyPI wheel but NO linux-aarch64 build anywhere.
+# DGL's own index only ships aarch64 for 2.2.0/2.2.1 (torch-2.1). So arm64 must
+# use dgl 2.2.0 — a version bump from the pinned x86 2.1.0. GIN-embedding parity
+# checked 2026-10-09 via dgllife load_pretrained('gin_supervised_masking'):
+# arm64 dgl 2.2.0 vs x86 dgl 2.4.0 (same pretrained weights) — CCO + aspirin
+# sum/L2 agree to ~1e-6, first-8 identical to 6 decimals. The x86 build pinned
+# here is 2.1.0 (same weights + GIN math), so parity is expected to carry but was
+# NOT run head-to-head against 2.1.0 — do that run if you want the exact match.
+RUN if [ "$TARGETARCH" = "arm64" ]; then \
+      pip3 install --no-cache-dir dgl==2.2.0 -f https://data.dgl.ai/wheels/torch-2.1/repo.html ; \
+    else \
+      pip3 install --no-cache-dir dgl==2.1.0 ; \
+    fi && \
+    pip3 install --no-cache-dir "dgllife>=0.3.2"
 
 # Create working directory
 WORKDIR /app
