@@ -33,6 +33,18 @@ jobs:
             type=raw,value=latest
             type=sha
 
+      # Authenticate Docker Hub so the QEMU binfmt pull AND the Dockerfile's base-image
+      # FROM pull use the per-account (authenticated) rate limit — not the shared-IP
+      # anonymous limit that fails on GitHub runners (toomanyrequests on tonistiigi/binfmt).
+      # DOCKERHUB_TOKEN should be a read-only personal access token (pull-only blast radius).
+      # ESCAPE HATCH: if Docker Hub tightens further, migrate to native arm64 runners
+      # (ubuntu-24.04-arm) + manifest-merge — no QEMU, no Docker Hub — rather than nurse this.
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
